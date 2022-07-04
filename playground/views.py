@@ -14,7 +14,11 @@ from tags.models import TaggedItem
 
 
 def say_hello(request):
-    queruset = TaggedItem.objects.get_tags_for(Product,1)
+    queryset = Product.objects.all()
+    list(queryset)
+    queryset[0] #will use it from the queryset cache
+
+    # queruset = TaggedItem.objects.get_tags_for(Product,1)
 
     # discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field= DecimalField())
     # queryset = Product.objects.annotate(
@@ -75,5 +79,5 @@ def say_hello(request):
     # list(query_set)
     # query_set[0:5]
     # return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
-    return render(request, 'hello.html', {'name': 'Osama', 'tags': list(queryset)})
-    # return render(request, 'hello.html', {'name': 'Osama',})
+    # return render(request, 'hello.html', {'name': 'Osama', 'tags': list(queryset)})
+    return render(request, 'hello.html', {'name': 'Osama'})
