@@ -9,14 +9,23 @@ from django.db.models import Q, F, Value, Func, Count, ExpressionWrapper
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
 from django.db.models.functions import Concat
 from django.contrib.contenttypes.models import ContentType
-from store.models import Customer, Order, Product, OrderItem
+from store.models import Collection, Customer, Order, Product, OrderItem
 from tags.models import TaggedItem
 
 
 def say_hello(request):
-    queryset = Product.objects.all()
-    list(queryset)
-    queryset[0] #will use it from the queryset cache
+    collection = Collection()
+    collection.title = 'Video Games'
+    collection.featured_product = Product(pk=1) #OR
+    # collection.featured_product_id = 1
+    collection.save()
+    collection.id
+    #OR
+    # collection = Collection.objects.create(name='a', featured_product_id=1)
+
+    # queryset = Product.objects.all()
+    # list(queryset)
+    # queryset[0] #will use it from the queryset cache
 
     # queruset = TaggedItem.objects.get_tags_for(Product,1)
 
