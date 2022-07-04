@@ -7,14 +7,24 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, F, Value, Func, Count, ExpressionWrapper
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
 from django.db.models.functions import Concat
+from django.contrib.contenttypes.models import ContentType
 from store.models import Customer, Order, Product, OrderItem
+from tags.models import TaggedItem
 
 
 def say_hello(request):
-    discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field= DecimalField())
-    queryset = Product.objects.annotate(
-        discounted_price = discounted_price
+    content_type = ContentType.objects.get_for_model(Product)
+    queryset = TaggedItem.objects \
+        .select_related('tag') \
+        .filter(
+            content_type= content_type,
+            object_id = 1
     )
+
+    # discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field= DecimalField())
+    # queryset = Product.objects.annotate(
+    #     discounted_price = discounted_price
+    # )
     # queryset = Customer.objects.annotate(
     #     orders_count = Count('order')
     # )
@@ -70,4 +80,5 @@ def say_hello(request):
     # list(query_set)
     # query_set[0:5]
     # return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
-    return render(request, 'hello.html', {'name': 'Osama',})
+    return render(request, 'hello.html', {'name': 'Osama', 'tags': list(queryset)})
+    # return render(request, 'hello.html', {'name': 'Osama',})
