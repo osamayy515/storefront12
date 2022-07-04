@@ -1,6 +1,6 @@
 from itertools import count, product
 import django
-from django.forms import DecimalField
+from django.db.models import DecimalField
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
@@ -69,4 +69,5 @@ def say_hello(request):
     #      print(product)
     # list(query_set)
     # query_set[0:5]
-    return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
+    # return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
+    return render(request, 'hello.html', {'name': 'Osama',})
