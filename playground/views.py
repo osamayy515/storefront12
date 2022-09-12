@@ -44,10 +44,10 @@ def say_hello(request):
     #     # CONCAT
     #     full_name = Func(F('first_name'), Value(' '), F('last_name'), function= 'CONCAT')
     # )
-    # queryset = Customer.objects.annotate(new_id = F('id'))
+    queryset = Customer.objects.annotate(new_id = F('id'))
     # queryset = Customer.objects.annotate(is_new = Value(True))
     
-    result = Product.objects.filter(collection__id=3).aggregate(count = Count('id'), min_price = Min('unit_price'))
+    # result = Product.objects.filter(collection__id=3).aggregate(count = Count('id'), min_price = Min('unit_price'))
 
     # queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product').order_by('-placed_at')[:5]
 
@@ -99,4 +99,4 @@ def say_hello(request):
     # query_set[0:5]
     # return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
     # return render(request, 'hello.html', {'name': 'Osama', 'tags': list(queryset)})
-    return render(request, 'hello.html', {'name':'Osama', 'result': result})
+    return render(request, 'hello.html', {'name':'Osama', 'result': list(queryset)})
