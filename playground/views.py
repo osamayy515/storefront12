@@ -46,8 +46,10 @@ def say_hello(request):
     # )
     # queryset = Customer.objects.annotate(new_id = F('id'))
     # queryset = Customer.objects.annotate(is_new = Value(True))
-    # result = Product.objects.aggregate(count = Count('id'), min_price = Min('unit_price'))
-    queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product').order_by('-placed_at')[:5]
+    
+    result = Product.objects.filter(collection__id=3).aggregate(count = Count('id'), min_price = Min('unit_price'))
+
+    # queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product').order_by('-placed_at')[:5]
 
     # select_related (1)
     # prefetch_related (n)
@@ -97,4 +99,4 @@ def say_hello(request):
     # query_set[0:5]
     # return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
     # return render(request, 'hello.html', {'name': 'Osama', 'tags': list(queryset)})
-    return render(request, 'hello.html', {'name':'Osama', 'orders':list(queryset)})
+    return render(request, 'hello.html', {'name':'Osama', 'result': result})
