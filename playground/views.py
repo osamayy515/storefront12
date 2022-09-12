@@ -53,14 +53,15 @@ def say_hello(request):
     # queryset = Product.objects.prefetch_related(
     #     'promotions').select_related('collection').all()
     # queryset = Product.objects.select_related('collection').all()
-    # to be careful from
-    # queryset = Product.objects.only('id', 'title')
-    # queryset = Product.objects.defer('id', 'title')
     
-    queryset = Product.objects.filter(
-        id__in=OrderItem.objects.values('product__id').distinct()).order_by('title')
-    queryset = Product.objects.values_list('id','title','collection__title')
-    queryset = Product.objects.values('id','title','collection__title')
+    # to be careful from
+    queryset = Product.objects.only('id', 'title')
+    queryset = Product.objects.defer('id', 'title')
+    
+    # queryset = Product.objects.filter(
+        # id__in=OrderItem.objects.values('product__id').distinct()).order_by('title')
+    # queryset = Product.objects.values_list('id','title','collection__title')
+    # queryset = Product.objects.values('id','title','collection__title')
     
     # 5,6,7,8,9
     # queryset = Product.objects.all()[5:10]
