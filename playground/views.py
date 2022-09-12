@@ -70,14 +70,14 @@ def say_hello(request):
     # queryset = Product.objects.order_by('-title')
     # queryset = Product.objects.order_by('title')
     #products:
-    # queryset = Product.objects.filter(inventory =F('collection__id'))
-    # queryset = Product.objects.filter(inventory =F('unit_price'))
-    queryset = Product.objects.filter(
-        Q(inventory__lt=10) | ~Q(unit_price__lt=20))
-    queryset = Product.objects.filter(
-        Q(inventory__lt=10) | Q(unit_price__lt=20))
-    queryset = Product.objects.filter(
-        inventory__lt=10).filter(unit_price__lt=20)
+    queryset = Product.objects.filter(inventory =F('collection__id'))
+    queryset = Product.objects.filter(inventory =F('unit_price'))
+    # queryset = Product.objects.filter(
+        # Q(inventory__lt=10) | ~Q(unit_price__lt=20))
+    # queryset = Product.objects.filter(
+        # Q(inventory__lt=10) | Q(unit_price__lt=20))
+    # queryset = Product.objects.filter(
+        # inventory__lt=10).filter(unit_price__lt=20)
     # queryset = Product.objects.filter(description__isnull=True)
     # queryset = Product.objects.filter(last_update__year=2021)
     # queryset = Product.objects.filter(title__iendswith='coffee')
