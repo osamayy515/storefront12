@@ -52,11 +52,11 @@ def say_hello(request):
     # # prefetch_related (n)
     # queryset = Product.objects.prefetch_related(
     #     'promotions').select_related('collection').all()
-    # queryset = Product.objects.select_related('collection').all()
+    queryset = Product.objects.select_related('collection').all()
     
     # to be careful from
-    queryset = Product.objects.only('id', 'title')
-    queryset = Product.objects.defer('id', 'title')
+    # queryset = Product.objects.only('id', 'title')
+    # queryset = Product.objects.defer('id', 'title')
     
     # queryset = Product.objects.filter(
         # id__in=OrderItem.objects.values('product__id').distinct()).order_by('title')
