@@ -14,12 +14,12 @@ from tags.models import TaggedItem
 
 
 def say_hello(request):
-    collection = Collection()
-    collection.title = 'Video Games'
-    collection.featured_product = Product(pk=1) #OR
-    # collection.featured_product_id = 1
-    collection.save()
-    collection.id
+    # collection = Collection()
+    # collection.title = 'Video Games'
+    # collection.featured_product = Product(pk=1) #OR
+    # # collection.featured_product_id = 1
+    # collection.save()
+    # collection.id
     #OR
     # collection = Collection.objects.create(name='a', featured_product_id=1)
 
@@ -78,15 +78,16 @@ def say_hello(request):
     #     Q(inventory__lt=10) | Q(unit_price__lt=20))
     # queryset = Product.objects.filter(
     #     inventory__lt=10).filter(unit_price__lt=20)
-    # queryset = Product.objects.filter(description__isnull=True)
-    # queryset = Product.objects.filter(last_update__year=2021)
-    # queryset = Product.objects.filter(title__iendswith='coffee')
-    # queryset = Product.objects.filter(title__icontains='coffee')
-    # queryset = Product.objects.filter(collection__id__range=(2,3))
+    queryset = Product.objects.filter(description__isnull=True)
+    queryset = Product.objects.filter(last_update__year=2021)
+    queryset = Product.objects.filter(title__iendswith='coffee')
+    queryset = Product.objects.filter(title__icontains='coffee')
+    queryset = Product.objects.filter(collection__id__range=(2,3))
+    queryset = Product.objects.filter(unit_price__range=(20,30))
     # for product in query_set:
     #      print(product)
     # list(query_set)
     # query_set[0:5]
     # return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
     # return render(request, 'hello.html', {'name': 'Osama', 'tags': list(queryset)})
-    return render(request, 'hello.html', {'name': 'Osama'})
+    return render(request, 'hello.html', {'name':'Osama', 'products':list(queryset)})
