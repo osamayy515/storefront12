@@ -61,8 +61,12 @@ def say_hello(request):
     #     id__in=OrderItem.objects.values('product__id').distinct()).order_by('title')
     # queryset = Product.objects.values_list('id','title','collection__title')
     # queryset = Product.objects.values('id','title','collection__title')
+    
     #5,6,7,8,9
-    # queryset = Product.objects.all()[5:10]
+    queryset = Product.objects.all()[5:10]
+    #0,1,2,3,4
+    queryset = Product.objects.all()[:5]
+    
     # product = Product.objects.order_by('unit_price')[1]
     # product = Product.objects.earliest('unit_price')
     # product = Product.objects.latest('unit_price')
