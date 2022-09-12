@@ -49,10 +49,12 @@ def say_hello(request):
     # result = Product.objects.aggregate(count = Count('id'), min_price = Min('unit_price'))
     # queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product').order_by('-placed_at')[:5]
     # select_related (1)
+    
     # # prefetch_related (n)
-    # queryset = Product.objects.prefetch_related(
-    #     'promotions').select_related('collection').all()
-    queryset = Product.objects.select_related('collection').all()
+    queryset = Product.objects.prefetch_related(
+        'promotions').select_related('collection').all()
+    
+    # queryset = Product.objects.select_related('collection').all()
     
     # to be careful from
     # queryset = Product.objects.only('id', 'title')
