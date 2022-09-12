@@ -72,18 +72,18 @@ def say_hello(request):
     #products:
     # queryset = Product.objects.filter(inventory =F('collection__id'))
     # queryset = Product.objects.filter(inventory =F('unit_price'))
-    # queryset = Product.objects.filter(
-    #     Q(inventory__lt=10) | ~Q(unit_price__lt=20))
-    # queryset = Product.objects.filter(
-    #     Q(inventory__lt=10) | Q(unit_price__lt=20))
-    # queryset = Product.objects.filter(
-    #     inventory__lt=10).filter(unit_price__lt=20)
-    queryset = Product.objects.filter(description__isnull=True)
-    queryset = Product.objects.filter(last_update__year=2021)
-    queryset = Product.objects.filter(title__iendswith='coffee')
-    queryset = Product.objects.filter(title__icontains='coffee')
-    queryset = Product.objects.filter(collection__id__range=(2,3))
-    queryset = Product.objects.filter(unit_price__range=(20,30))
+    queryset = Product.objects.filter(
+        Q(inventory__lt=10) | ~Q(unit_price__lt=20))
+    queryset = Product.objects.filter(
+        Q(inventory__lt=10) | Q(unit_price__lt=20))
+    queryset = Product.objects.filter(
+        inventory__lt=10).filter(unit_price__lt=20)
+    # queryset = Product.objects.filter(description__isnull=True)
+    # queryset = Product.objects.filter(last_update__year=2021)
+    # queryset = Product.objects.filter(title__iendswith='coffee')
+    # queryset = Product.objects.filter(title__icontains='coffee')
+    # queryset = Product.objects.filter(collection__id__range=(2,3))
+    # queryset = Product.objects.filter(unit_price__range=(20,30))
     # for product in query_set:
     #      print(product)
     # list(query_set)
