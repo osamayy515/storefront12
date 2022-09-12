@@ -63,15 +63,15 @@ def say_hello(request):
     # queryset = Product.objects.values('id','title','collection__title')
     #5,6,7,8,9
     # queryset = Product.objects.all()[5:10]
-    # product = Product.objects.order_by('unit_price')[1]
-    # product = Product.objects.earliest('unit_price')
-    # product = Product.objects.latest('unit_price')
-    # queryset = Product.objects.order_by('unit_price','-title').reverse()
-    # queryset = Product.objects.order_by('-title')
-    # queryset = Product.objects.order_by('title')
+    product = Product.objects.order_by('unit_price')[1]
+    product = Product.objects.earliest('unit_price')
+    product = Product.objects.latest('unit_price')
+    queryset = Product.objects.order_by('unit_price','-title').reverse()
+    queryset = Product.objects.order_by('-title')
+    queryset = Product.objects.order_by('title')
     #products:
-    queryset = Product.objects.filter(inventory =F('collection__id'))
-    queryset = Product.objects.filter(inventory =F('unit_price'))
+    # queryset = Product.objects.filter(inventory =F('collection__id'))
+    # queryset = Product.objects.filter(inventory =F('unit_price'))
     # queryset = Product.objects.filter(
         # Q(inventory__lt=10) | ~Q(unit_price__lt=20))
     # queryset = Product.objects.filter(
