@@ -29,21 +29,23 @@ def say_hello(request):
 
     # queruset = TaggedItem.objects.get_tags_for(Product,1)
 
-    # discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field= DecimalField())
-    # queryset = Product.objects.annotate(
-    #     discounted_price = discounted_price
+    discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field = DecimalField())
+    queryset = Product.objects.annotate(
+        discounted_price = discounted_price
+    )
+
+    # queryset = Customer.objects.annotate(
+        # orders_count = Count('order')
+    # )
+
+    # queryset = Customer.objects.annotate(
+        # CONCAT
+        # full_name = Concat('first_name', Value(' '), 'last_name')
     # )
     # queryset = Customer.objects.annotate(
-    #     orders_count = Count('order')
+        # CONCAT
+        # full_name = Func(F('first_name'), Value(' '), F('last_name'), function= 'CONCAT')
     # )
-    queryset = Customer.objects.annotate(
-        # CONCAT
-        full_name = Concat('first_name', Value(' '), 'last_name')
-    )
-    queryset = Customer.objects.annotate(
-        # CONCAT
-        full_name = Func(F('first_name'), Value(' '), F('last_name'), function= 'CONCAT')
-    )
     
     # queryset = Customer.objects.annotate(new_id = F('id'))
     # queryset = Customer.objects.annotate(is_new = Value(True))
