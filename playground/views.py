@@ -14,10 +14,18 @@ from tags.models import TaggedItem
 
 
 def say_hello(request):
-    collection = Collection()
-    collection.title = 'Video Games'
-    collection.featured_product = Product(pk=1) 
-    collection.save()
+    # collection = Collection.objects.get(pk=11)
+    # collection.featured_product = None           #but this will set the title to null or empty
+    # collection.save()
+
+    #OR
+    Collection.objects.filter(pk=11).update(featured_product=None)
+
+
+    # collection = Collection()
+    # collection.title = 'Video Games'
+    # collection.featured_product = Product(pk=1) 
+    # collection.save()
     # collection.id
 
     #OR
