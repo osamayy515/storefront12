@@ -23,11 +23,11 @@ def say_hello(request):
     #OR
     # collection = Collection.objects.create(name='a', featured_product_id=1)
 
-    # queryset = Product.objects.all()
-    # list(queryset)
-    # queryset[0] #will use it from the queryset cache
+    queryset = Product.objects.all()
+    list(queryset)
+    queryset[0] #will use it from the queryset cache
     
-    queryset = TaggedItem.objects.get_tags_for(Product,1)
+    # queryset = TaggedItem.objects.get_tags_for(Product,1)
 
     # content_type = ContentType.objects.get_for_model(Product)
     # queryset = TaggedItem.objects \
