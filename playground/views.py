@@ -8,17 +8,33 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, F, Value, Func, Count, ExpressionWrapper
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
 from django.db.models.functions import Concat
+from django.db import transaction
 from django.contrib.contenttypes.models import ContentType
 from store.models import Collection, Customer, Order, Product, OrderItem
 from tags.models import TaggedItem
 
 
 def say_hello(request):
-    collection = Collection(pk=11)
-    collection.delete()
 
-    #OR
-    Collection.objects.filter(id__gt=5).delete()
+    #... (some code which is not required to be included in transaction)
+
+    with transaction.atomic():
+        order = Order()
+        order.customer_id = 1
+        order.save()
+
+        item = OrderItem()
+        item.order = order
+        item.product_id = 1
+        item.quantity = 1
+        item.unit_price = 10
+        item.save()
+
+    # collection = Collection(pk=11)
+    # collection.delete()
+
+    # OR
+    # Collection.objects.filter(id__gt=5).delete()
     
     
     # collection = Collection.objects.get(pk=11)
