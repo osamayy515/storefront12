@@ -14,12 +14,19 @@ from tags.models import TaggedItem
 
 
 def say_hello(request):
+    collection = Collection(pk=11)
+    collection.delete()
+
+    #OR
+    Collection.objects.filter(id__gt=5).delete()
+    
+    
     # collection = Collection.objects.get(pk=11)
     # collection.featured_product = None           #but this will set the title to null or empty
     # collection.save()
 
     #OR
-    Collection.objects.filter(pk=11).update(featured_product=None)
+    # Collection.objects.filter(pk=11).update(featured_product=None)
 
 
     # collection = Collection()
