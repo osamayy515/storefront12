@@ -14,18 +14,30 @@ from tags.models import TaggedItem
 
 
 def say_hello(request):
-    # collection = Collection()
-    # collection.title = 'Video Games'
-    # collection.featured_product = Product(pk=1) #OR
-    # # collection.featured_product_id = 1
+    collection = Collection()
+    collection.title = 'Video Games'
+    collection.featured_product = Product(pk=1) 
+    collection.save()
+    # collection.id
+
+    #OR
+    # collection = Collection(title = 'abc', featured_product_id = 1)
     # collection.save()
     # collection.id
+
+    #OR
+    # collection.featured_product_id = 1
+    # collection.save()
+    # collection.id
+    
     #OR
     # collection = Collection.objects.create(name='a', featured_product_id=1)
+    # collection.save()
+    # collection.id
 
-    queryset = Product.objects.all()
-    list(queryset)
-    queryset[0] #will use it from the queryset cache
+    # queryset = Product.objects.all()
+    # list(queryset)
+    # queryset[0] #will use it from the queryset cache
     
     # queryset = TaggedItem.objects.get_tags_for(Product,1)
 
@@ -110,4 +122,4 @@ def say_hello(request):
     # query_set[0:5]
     # return render(request, 'hello.html', {'name': 'Osama', 'result': list(queryset)})
     # return render(request, 'hello.html', {'name': 'Osama', 'tags': list(queryset)})
-    return render(request, 'hello.html', {'name':'Osama', 'result': list(queryset)})
+    return render(request, 'hello.html', {'name':'Osama'})
