@@ -36,15 +36,16 @@ def say_hello(request):
     # queryset = Customer.objects.annotate(
     #     orders_count = Count('order')
     # )
-    # queryset = Customer.objects.annotate(
-    #     # CONCAT
-    #     full_name = Concat('first_name', Value(' '), 'last_name')
-    # )
-    # queryset = Customer.objects.annotate(
-    #     # CONCAT
-    #     full_name = Func(F('first_name'), Value(' '), F('last_name'), function= 'CONCAT')
-    # )
-    queryset = Customer.objects.annotate(new_id = F('id'))
+    queryset = Customer.objects.annotate(
+        # CONCAT
+        full_name = Concat('first_name', Value(' '), 'last_name')
+    )
+    queryset = Customer.objects.annotate(
+        # CONCAT
+        full_name = Func(F('first_name'), Value(' '), F('last_name'), function= 'CONCAT')
+    )
+    
+    # queryset = Customer.objects.annotate(new_id = F('id'))
     # queryset = Customer.objects.annotate(is_new = Value(True))
     
     # result = Product.objects.filter(collection__id=3).aggregate(count = Count('id'), min_price = Min('unit_price'))
