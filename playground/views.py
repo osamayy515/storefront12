@@ -26,13 +26,21 @@ def say_hello(request):
     # queryset = Product.objects.all()
     # list(queryset)
     # queryset[0] #will use it from the queryset cache
+    
+    content_type = ContentType.objects.get_for_model(Product)
+    queryset = TaggedItem.objects \
+        .select_related('tag') \
+        .filter(
+            content_type = content_type,
+            object_id = 1
+        )
 
     # queruset = TaggedItem.objects.get_tags_for(Product,1)
 
-    discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field = DecimalField())
-    queryset = Product.objects.annotate(
-        discounted_price = discounted_price
-    )
+    # discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field = DecimalField())
+    # queryset = Product.objects.annotate(
+        # discounted_price = discounted_price
+    # )
 
     # queryset = Customer.objects.annotate(
         # orders_count = Count('order')
