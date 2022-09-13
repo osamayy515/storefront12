@@ -9,26 +9,39 @@ from django.db.models import Q, F, Value, Func, Count, ExpressionWrapper
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
 from django.db.models.functions import Concat
 from django.db import transaction
+from django.db import connection
 from django.contrib.contenttypes.models import ContentType
 from store.models import Collection, Customer, Order, Product, OrderItem
 from tags.models import TaggedItem
 
 
 def say_hello(request):
+    #To access the database directly
+    with connection.cursor() as cursor:
+        cursor.execute('')     #for executing raw SQL queries
+        cursor.callproc('')    #for executing stored procedures
 
-    #... (some code which is not required to be included in transaction)
+    #OR
+    # cursor = connection.cursor()
+    # cursor.execute('')
+    # cursor.close()
 
-    with transaction.atomic():
-        order = Order()
-        order.customer_id = 1
-        order.save()
+    #Running raw SQL querires
+    # queryset = Product.objects.raw('select id, title from store_product')
 
-        item = OrderItem()
-        item.order = order
-        item.product_id = 1
-        item.quantity = 1
-        item.unit_price = 10
-        item.save()
+    # ... (some code which is not required to be included in transaction)
+
+    # with transaction.atomic():
+        # order = Order()
+        # order.customer_id = 1
+        # order.save()
+
+        # item = OrderItem()
+        # item.order = order
+        # item.product_id = 1
+        # item.quantity = 1
+        # item.unit_price = 10
+        # item.save()
 
     # collection = Collection(pk=11)
     # collection.delete()
