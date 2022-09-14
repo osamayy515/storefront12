@@ -1,4 +1,7 @@
+from django.http import HttpResponse
 from django.contrib import admin
+from django.db.models import Count
+from django.db.models import F
 from . import models
 
 @admin.register(models.Product)
@@ -18,6 +21,19 @@ class ProductAdmin(admin.ModelAdmin):
         return 'OK'
 # admin.site.register(models.Product, ProductAdmin)      #no longer needed because of line 4
 
+@admin.register(models.Collection)
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = ['title','products_count']
+
+    @admin.display(ordering='products_count')
+    def products_count(self, collection):
+      return collection.products_count
+
+    def get_queryset(self, request):
+      return super(CollectionAdmin, self).get_queryset(request).annotate(
+          products_count=Count(F('product')))
+
+
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ['first_name','last_name','membership']
@@ -29,4 +45,3 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id','placed_at','customer']
 
 
-admin.site.register(models.Collection)

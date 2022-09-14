@@ -110,7 +110,7 @@ def say_hello(request):
         # CONCAT
         # full_name = Func(F('first_name'), Value(' '), F('last_name'), function= 'CONCAT')
     # )
-    
+
     # queryset = Customer.objects.annotate(new_id = F('id'))
     # queryset = Customer.objects.annotate(is_new = Value(True))
     
