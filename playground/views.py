@@ -17,9 +17,9 @@ from tags.models import TaggedItem
 
 def say_hello(request):
     #To access the database directly
-    with connection.cursor() as cursor:
-        cursor.execute('')     #for executing raw SQL queries
-        cursor.callproc('')    #for executing stored procedures
+    # with connection.cursor() as cursor:
+        # cursor.execute('')     #for executing raw SQL queries
+        # cursor.callproc('')    #for executing stored procedures
 
     #OR
     # cursor = connection.cursor()
