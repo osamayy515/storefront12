@@ -53,6 +53,13 @@ class Customer(models.Model):
     membership = models.CharField(
         max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
 
+    def __str__(self) -> str:
+        return self.title
+    
+    class Meta:
+        ordering = ['first_name','last_name']
+
+
 
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
