@@ -1,7 +1,10 @@
+from urllib.parse import urlencode
 from django.http import HttpResponse
 from django.contrib import admin
 from django.db.models import Count
 from django.db.models import F
+from django.utils.html import format_html, urlencode
+from django.urls import reverse
 from . import models
 
 @admin.register(models.Product)
@@ -27,18 +30,27 @@ class CollectionAdmin(admin.ModelAdmin):
 
     @admin.display(ordering='products_count')
     def products_count(self, collection):
-      return collection.products_count
+        url = (reverse('admin:store_product_changelist') + '?' + urlencode({'collection__id': str(collection.id)}))
+        return format_html('<a href="{}">{}</a>', url, collection.products_count)
 
     def get_queryset(self, request):
-      return super(CollectionAdmin, self).get_queryset(request).annotate(
-          products_count=Count(F('product')))
+        return super(CollectionAdmin, self).get_queryset(request).annotate(
+            products_count=Count(F('product')))
 
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['first_name','last_name','membership']
+    list_display = ['first_name','last_name','membership','orders_count']
     list_editable = ['membership']
     list_per_page = 20
+    
+    def orders_count(self, customer):
+        return customer.orders_count
+    
+    def get_queryset(self, request):
+        return super(CustomerAdmin, self).get_queryset(request).annotate(
+            orders_count=Count(F('order')))
+
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
