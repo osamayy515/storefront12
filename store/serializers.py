@@ -1,25 +1,35 @@
 import collections
+from dataclasses import fields
 from rest_framework import serializers
 
 from decimal import Decimal
-from store.models import Product, Collection
+from store.admin import ProductAdmin
+from store.models import Customer, Product, Collection
 from rest_framework import serializers
 
-class CollectionSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField(max_length=255)
+class CollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['id','title']
 
-class ProductSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField(max_length=255)
-    price = serializers.DecimalField(max_digits=6, decimal_places=2, source='unit_price')
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        
+        fields = ['id','title','unit_price','price_with_tax','collection']
+        #OR
+        # fields = '__all__'     #for showing all the fields but not a good practice
+
     price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
-    
-    # by hyperlink
-    collection = serializers.HyperlinkedRelatedField(
-        queryset = Collection.objects.all(),
-        view_name='collection-detail'
-    )
+        
+    # id = serializers.IntegerField()
+    # title = serializers.CharField(max_length=255)
+    # price = serializers.DecimalField(max_digits=6, decimal_places=2, source='unit_price')
+    #   #by hyperlink
+    # collection = serializers.HyperlinkedRelatedField(
+        # queryset = Collection.objects.all(),
+        # view_name='collection-detail'
+    # )
     
     #OR
     # by nested object
