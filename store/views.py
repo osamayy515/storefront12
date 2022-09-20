@@ -1,3 +1,4 @@
+from urllib import response
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -16,8 +17,8 @@ def product_list(request):
     elif request.method == 'POST':
         serializer = ProductSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.validated_data
-        return Response('ok')
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
         #OR
         # if serializer.is_valid():
             # serializer.validated_data
@@ -25,11 +26,17 @@ def product_list(request):
         # else: 
             # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view()
+@api_view(['GET','PUT','PATCH'])
 def product_detail(request, id):
     product = get_object_or_404(Product, pk=id)
-    serializer = ProductSerializer(product)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ProductSerializer(product, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return response(serializer.data)
 
 @api_view()
 def collection_detail(request, pk):
