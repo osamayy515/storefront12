@@ -8,8 +8,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
-from .models import Collection, OrderItem, Product
-from .serializers import CollectionSerializer, ProductSerializer
+from .models import Collection, OrderItem, Product, Review
+from .serializers import CollectionSerializer, ProductSerializer, ReviewSerializer
 
                 #Product Viewset
 class ProductViewSet(ModelViewSet):
@@ -204,3 +204,6 @@ class CollectionViewSet(ModelViewSet):
     # except Product.DoesNotExist:
         # return Response(status=status.HTTP_404_NOT_FOUND)
 
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
