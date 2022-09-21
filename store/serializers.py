@@ -1,9 +1,5 @@
-import collections
-from dataclasses import fields
 from rest_framework import serializers
-
 from decimal import Decimal
-from store.admin import ProductAdmin
 from store.models import Customer, Product, Collection
 from rest_framework import serializers
 
