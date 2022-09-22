@@ -16,6 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         
         fields = ['id','title','description','slug','inventory','unit_price','price_with_tax','collection']
+        depth = 1
         #OR
         # fields = '__all__'     #for showing all the fields but not a good practice
 
@@ -64,7 +65,7 @@ class ProductSerializer(serializers.ModelSerializer):
         # instance.save()
         # return instance
 
-class ReviewSerializer(serializers.Serializer):
+class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ['id','date','name','description','product']
