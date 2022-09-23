@@ -1,3 +1,4 @@
+from itertools import product
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
@@ -35,11 +36,13 @@ class CollectionViewSet(ModelViewSet):
 
                 #Review Viewset
 class ReviewViewSet(ModelViewSet):
-    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+    def get_queryset(self):
+        return Review.objects.filter(product_id=self.kwargs['product_pk'])
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}
 
                 #Generic view
 # class ProductList(ListCreateAPIView):
