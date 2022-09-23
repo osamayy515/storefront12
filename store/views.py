@@ -1,3 +1,4 @@
+from ast import IsNot
 from itertools import product
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
@@ -13,9 +14,20 @@ from .serializers import CollectionSerializer, ProductSerializer, ReviewSerializ
 
                 #Product Viewset
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.select_related('collection').all()
     serializer_class = ProductSerializer
-    
+
+    def get_queryset(self):
+                #proper way of defining the method
+        queryset = Product.objects.all()
+        collection_id = self.request.query_params.get('collection_id')
+        if collection_id is not None:
+            queryset = queryset.filter(collection_id=collection_id)
+        
+        return queryset
+                
+                #only applicable if we have a collection_id
+        # return Product.objects.filter(collection_id=self.request.query_params['collection_id'])
+
     def get_serializer_context(self):
         return {'request': self.request}
 
