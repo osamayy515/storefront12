@@ -14,7 +14,6 @@ class CollectionSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        
         fields = ['id','title','description','slug','inventory','unit_price','price_with_tax','collection']
         # depth = 1
         #OR

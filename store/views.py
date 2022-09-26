@@ -1,32 +1,25 @@
-from ast import IsNot
-from itertools import product
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView ,ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
+from store.filters import ProductFilter
 from .models import Collection, OrderItem, Product, Review
 from .serializers import CollectionSerializer, ProductSerializer, ReviewSerializer
-
+from django_filters.rest_framework import DjangoFilterBackend
+                
                 #Product Viewset
 class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-    def get_queryset(self):
-                #proper way of defining the method
-        queryset = Product.objects.all()
-        collection_id = self.request.query_params.get('collection_id')
-        if collection_id is not None:
-            queryset = queryset.filter(collection_id=collection_id)
-        
-        return queryset
-                
-                #only applicable if we have a collection_id
-        # return Product.objects.filter(collection_id=self.request.query_params['collection_id'])
+    filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['collection_id']
+    filterset_class = ProductFilter
 
     def get_serializer_context(self):
         return {'request': self.request}
@@ -55,6 +48,7 @@ class ReviewViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
+
 
                 #Generic view
 # class ProductList(ListCreateAPIView):
