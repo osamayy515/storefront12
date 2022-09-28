@@ -70,10 +70,12 @@ class CollectionAdmin(admin.ModelAdmin):
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['user']
     list_display = ['first_name','last_name','membership','orders_count']
     list_editable = ['membership']
     list_per_page = 20
-    search_fields = ['first_name__istartswith','last_name__istartswith']
+    list_select_related = ['user']
+    search_fields = ['user__first_name__istartswith','user__last_name__istartswith']
     
     @admin.display(ordering='orders_count')
     def orders_count(self, customer):
