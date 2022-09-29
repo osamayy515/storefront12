@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from doctest import REPORT_ONLY_FIRST_FAILURE
+from datetime import timedelta
 from pathlib import Path
 from pickle import FALSE
 import pymysql 
@@ -168,4 +169,8 @@ DJOSER = {
     'SERIALIZERS':{
         'user_create':'core.serializers.UserCreateSerializer'
     }
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
 }
