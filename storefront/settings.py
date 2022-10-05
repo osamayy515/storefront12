@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'djoser',
+    # 'corsheaders',
+    # 'social_django',
+    # 'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt.token_blacklist',
     'playground',
     'debug_toolbar',
     'store',
@@ -54,6 +58,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
+    # 'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,6 +68,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
+
+# CORS_ORIGIN_WHITELIST = [
+#      "http://localhost:3000",
+#      "http://127.0.0.1:3000", 
+# ]
+
+# CORS_ALLOW_CREDENTIALS = True
+
+# ROOT_URLCONF = 'auth_system.urls'
 
 INTERNAL_IPS = [
     # ...
@@ -82,6 +102,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect'
             ],
         },
     },
@@ -155,7 +177,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     # 'DEFAULT_PERMISSION_CLASSES':[
-        # 'rest_framework.permissions.IsAuthenticated'
+    #     'rest_framework.permissions.IsAuthenticated'
     # ]
     # 'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
     # 'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
@@ -165,13 +187,39 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'core.User'
 
 DJOSER = {
+    'LOGIN_FIELD': 'email',
+    # 'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
+    # 'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://127.0.0.1:3000', 'http://127.0.0.1:3000/home','http://127.0.0.1:3000/login'],
     'SERIALIZERS':{
         'user_create':'core.serializers.UserCreateSerializer',
-        'current_user':'core.serializers.UserSerializer'
+        'current_user':'core.serializers.UserSerializer',
+        # 'token_create':'core.serializers.TokenCreateSerializer'
     }
 }
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    # 'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    # 'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',)
 }
+
+# AUTHENTICATION_BACKENDS = (
+#     'social_core.backends.google.GoogleOAuth2',
+#     'django.contrib.auth.backends.ModelBackend'
+# )
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'core.authentication.CustomAuthBackend',
+]
+
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'your_client_id_key'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your_secret_key'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+#     'https://www.googleapis.com/auth/userinfo.email',
+#     'https://www.googleapis.com/auth/userinfo.profile',
+#     'openid'
+# ]
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']

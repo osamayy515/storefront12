@@ -13,6 +13,8 @@ drf-nested-routers = "*"
 django-filter = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
+social-auth-app-django = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
